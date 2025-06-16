@@ -44,7 +44,8 @@ export const router = createBrowserRouter([
         element: <PrivateRoutes>
             <Myapplication />
         </PrivateRoutes>,
-    },{
+    },
+    {
         path:"*",
         Component:NotFound,
     }
