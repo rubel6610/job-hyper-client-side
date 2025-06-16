@@ -25,12 +25,12 @@ const MyapplicationTable = ({application, index}) => {
           </div>
         </td>
         <td>
-            <a href={linkedin}> LinkedIn</a>
+            <a className="badge badge-ghost badge-sm" href={linkedin}> LinkedIn</a>
          
           <br />
-          <a href={instagram} className="badge badge-ghost badge-sm">{instagram}</a>
+          <a href={instagram} className="badge badge-ghost badge-sm">Instagram</a>
           <br />
-           <a className="badge badge-ghost badge-sm">{github}</a>
+           <a className="badge badge-ghost badge-sm" href={github}>github</a>
         </td>
         <td>{title}</td>
        

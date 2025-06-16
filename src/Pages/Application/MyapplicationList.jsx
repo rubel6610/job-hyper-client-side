@@ -20,7 +20,7 @@ const MyapplicationList = ({ myapplicationPromise }) => {
                             </th>
                             <th>link</th>
                             <th>job type</th>
-                            <th>Favorite Color</th>
+                            <th>Application Category</th>
                            
                         </tr>
                     </thead>
