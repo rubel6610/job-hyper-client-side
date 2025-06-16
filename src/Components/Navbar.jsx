@@ -11,7 +11,7 @@ const Navbar = () => {
     <NavLink to="/">Home</NavLink>
   </>
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar container mx-auto bg-base-100 shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -38,9 +38,9 @@ const Navbar = () => {
             <Link to="/register" className="btn">Register</Link>
           </> :
           <>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-center">
               <div tabIndex={0} role="button" className='btn btn-ghost btn-circle avatar'><img className='w-10 rounded-full' src={user.photoURL} /></div>
-              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52  shadow-sm">
+              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-42   shadow-sm">
                 <li><h1>{user.displayName}</h1></li>
                 <li><button onClick={() => logOut()}>LogOut</button></li>
               </ul>

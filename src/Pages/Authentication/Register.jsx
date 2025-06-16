@@ -5,42 +5,63 @@ import RegisterLottie from "../../assets/Looties/register.json"
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
 
 const Register = () => {
     const navigate = useNavigate();
-    const {createUser,updateUserProfile,setUser} =useContext(AuthContext);
+    const { createUser, updateUserProfile, setUser, googleLogin } = useContext(AuthContext);
     const handleRegister = e => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const {email,password,name,photoURL} = Object.fromEntries(formData.entries());
-        createUser(email,password)
-        .then(result=>{
-          const user = result.user;
+        const { email, password, name, photoURL } = Object.fromEntries(formData.entries());
+        createUser(email, password)
+            .then(result => {
+                const user = result.user;
+                setUser(user)
+                updateUserProfile({
+                    displayName: name,
+                    photoURL: photoURL,
+                })
+                    .then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registration Successful',
+                            text: `Welcome, ${name}!`,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        form.reset();
+                        navigate("/")
+                    })
+            }).catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Registration Failed',
+                    text: error.message
+                });
+            })
+
+    }
+    const handleGoogle = () => {
+        googleLogin().then(result => {
+            const user = result.user;
             setUser(user)
-          updateUserProfile({
-            displayName: name,
-            photoURL:photoURL,
-          })
-           .then(() => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Registration Successful',
-              text: `Welcome, ${name}!`,
-              showConfirmButton: false,
-              timer: 2000
-            });
-            form.reset();
-            navigate("/")
+          Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: `Welcome, ${user.displayName}!`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                   navigate("/")
+        }).catch(error=>{
+             Swal.fire({
+                    icon: 'error',
+                    title: 'Registration Failed',
+                    text: error.message
+                });
         })
-    }).catch((error) => {
-         Swal.fire({
-          icon: 'error',
-          title: 'Registration Failed',
-          text: error.message
-        });
-    })
-       
     }
     return (
         <div>
@@ -64,11 +85,16 @@ const Register = () => {
                                     <input type="text" className="input" placeholder="PhotoURL" name='photoURL' id='photourl' />
                                     <label htmlFor="password" className="label">Password</label>
                                     <input type="password" className="input" placeholder="Password" name='password' id='password' />
-                                   
+
                                     <button className="btn btn-neutral mt-4">Register</button>
                                     <p>Already have an account  <Link className='underline text-blue-400' to="/login">Login</Link></p>
                                 </fieldset>
+                               
                             </form>
+                             <div className="divider">OR</div>
+                                <button onClick={handleGoogle} className="btn w-full bg-white text-black border-[#e5e5e5]">
+                                    <FcGoogle /> Sign Up with Google
+                                </button>
                         </div>
                     </div>
                 </div>

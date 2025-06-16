@@ -5,38 +5,61 @@ import Lottie from "lottie-react"
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
     const navigate = useNavigate();
-    const {loginUser,setUser} =useContext(AuthContext);
+    const { loginUser, setUser, googleLogin } = useContext(AuthContext);
     const handleLogin = e => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const {email,password} = Object.fromEntries(formData.entries());
-        loginUser(email,password)
-        .then(result=>{
-          const user = result.user;
+        const { email, password } = Object.fromEntries(formData.entries());
+        loginUser(email, password)
+            .then(result => {
+                const user = result.user;
+                setUser(user)
+                console.log(user);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: `Welcome, ${user.displayName}!`,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                form.reset();
+                navigate("/")
+
+            }).catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Registration Failed',
+                    text: error.message
+                });
+
+            })
+
+    }
+    const handleGoogle = () => {
+        googleLogin().then(result => {
+            const user = result.user;
             setUser(user)
-            console.log(user);
             Swal.fire({
-              icon: 'success',
-              title: 'Login Successful',
-              text: `Welcome, ${user.displayName}!`,
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'success',
+                title: 'Login Successful',
+                text: `Welcome, ${user.displayName}!`,
+                showConfirmButton: false,
+                timer: 2000
             });
-            form.reset();
             navigate("/")
-     
-    }).catch((error) => {
-         Swal.fire({
-          icon: 'error',
-          title: 'Registration Failed',
-          text: error.message
-        });
-    })
-       
+
+        }).catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: error.message
+            });
+        })
     }
     return (
         <div>
@@ -52,17 +75,23 @@ const Login = () => {
                         <div className="card-body">
                             <form onSubmit={handleLogin}>
                                 <fieldset className="fieldset">
-                                  
+
                                     <label htmlFor="email" className="label">Email</label>
                                     <input type="email" className="input" placeholder="Email" name='email' id='email' />
-                                 
+
                                     <label htmlFor="password" className="label">Password</label>
                                     <input type="password" className="input" placeholder="Password" name='password' id='password' />
-                                   
+
                                     <button className="btn btn-neutral mt-4">Login</button>
                                     <p>Don't have an account  <Link className='underline text-blue-400' to="/register">Register</Link></p>
                                 </fieldset>
+
                             </form>
+                            <div className="divider">OR</div>
+                            <button onClick={handleGoogle} className="btn w-full bg-white text-black border-[#e5e5e5]">
+                                <FcGoogle />
+                                Login with Google
+                            </button>
                         </div>
                     </div>
                 </div>
