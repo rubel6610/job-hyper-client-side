@@ -12,7 +12,7 @@ const Jobapply = () => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const {github,instagram,linkedin} = Object.fromEntries(formData.entries());
+        const { github, instagram, linkedin } = Object.fromEntries(formData.entries());
         const applicationData = {
             jobId,
             github,
@@ -44,19 +44,19 @@ const Jobapply = () => {
     }
     return (
         <div className=''>
-            <Navbar/>
+            <Navbar />
             <form onSubmit={handleApply}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-6/12 mx-auto border p-4 space-y-3">
                     <h1 className=" text-2xl text-center">Apply job For</h1>
 
                     <label className="label">LinkedIn profile link</label>
-                    <input type="text" name='linkedin' className="input w-full" placeholder="Linked profile link" />
+                    <input type="text" name='linkedin' className="input w-full" placeholder="Linked profile link" required />
 
                     <label className="label">Instragram Profile link</label>
-                    <input type="text" name='instagram' className="w-full input" placeholder="Instagram profile link" />
+                    <input type="text" name='instagram' className="w-full input" placeholder="Instagram profile link" required />
 
                     <label className="label">Github profile link</label>
-                    <input type="text" name='github' className="input w-full" placeholder="Github profile link" />
+                    <input type="text" name='github' className="input w-full" placeholder="Github profile link" required />
                     <input className='btn btn-soft btn-secondary' type="submit" value="Apply" />
                 </fieldset>
 
