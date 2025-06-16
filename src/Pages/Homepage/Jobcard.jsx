@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Jobcard = ({ job }) => {
+ 
     const { _id, title, location, jobType, category, description, company, company_logo, requirements } = job;
     return (
         <div className="card border-2 bg-base-100 w-96 shadow-sm space-y-6">
@@ -33,7 +34,7 @@ const Jobcard = ({ job }) => {
                         requirements.map((req, index) => <p key={index} className='border-1 rounded-lg text-center'>{req}</p>)
                     }
                 </div>
-                <Link to={`jobdetails/${_id}`} className='btn btn-soft btn-secondary'>See Details</Link>
+                <Link to={`/jobdetails/${_id}`} className='btn btn-soft btn-secondary'>See Details</Link>
             </div>
         </div>
     );
