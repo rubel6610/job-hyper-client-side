@@ -20,7 +20,7 @@ const Banner = () => {
             className="rounded-full w-96 border-8 border-s-fuchsia-700 border-b-blue-800  shadow-2xl"
           />
         </div>
-        <div className='space-y-6'>
+        <div className='space-y-4'>
           <motion.h1 className="text-4xl font-bold">The Easiest Way
             to <br /> Get Your New Job</motion.h1>
           <p>Each month, more than 3 million job seekers turn to
