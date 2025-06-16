@@ -1,36 +1,58 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Navbar = () => {
-    const links = <>
+  const { user, logOut } = useContext(AuthContext)
+
+
+  const links = <>
     <NavLink to="/">Home</NavLink>
-    </>
-    return (
-       <div className="navbar bg-base-100 shadow-sm">
-  <div className="navbar-start">
-    <div className="dropdown">
-      <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-       <FaBars/>
+  </>
+  return (
+    <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <FaBars />
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            {links}
+          </ul>
+        </div>
+        <a className="btn btn-ghost text-xl">Job Hyper</a>
       </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        {links}
-      </ul>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          {links}
+        </ul>
+      </div>
+
+      <div className="navbar-end">
+        {!user ?
+          <>
+            <Link to="/login" className="btn">Login</Link>
+            <Link to="/register" className="btn">Register</Link>
+          </> :
+          <>
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className='btn btn-ghost btn-circle avatar'><img className='w-10 rounded-full' src={user.photoURL} /></div>
+              <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52  shadow-sm">
+                <li><h1>{user.displayName}</h1></li>
+                <li><button onClick={() => logOut()}>LogOut</button></li>
+              </ul>
+            </div>
+          </>
+
+        }
+
+
+      </div>
     </div>
-    <a className="btn btn-ghost text-xl">Job Hyper</a>
-  </div>
-  <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1">
-     {links}
-    </ul>
-  </div>
-  <div className="navbar-end">
-    <Link to="/register" className="btn">Register</Link>
-  </div>
-</div>
-    );
+  );
 };
 
 export default Navbar;
