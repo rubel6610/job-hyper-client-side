@@ -8,6 +8,7 @@ import Jobapply from "../Components/Jobapply";
 import PrivateRoutes from "./PrivateRoutes";
 import Myapplication from "../Pages/Application/Myapplication";
 import NotFound from "../Pages/NotFoundRoute";
+import Addjobs from "../Pages/Addjobs/Addjobs";
 
 export const router = createBrowserRouter([
     {
@@ -30,8 +31,15 @@ export const router = createBrowserRouter([
     },
     {
         path: "/jobdetails/:id",
-        loader: ({ params }) => fetch(`https://job-hyper-server.vercel.app/singlejob/${params.id}`),
+        loader: async ({ params }) => {
+            const res = await fetch(`https://job-hyper-server.vercel.app/singlejob/${params.id}`);
+            if (!res.ok) {
+                throw new Response("Not Found", { status: 404 });
+            }
+            return res.json();
+        },
         Component: Jobdetails,
+
     },
     {
         path: "/jobapply/:id",
@@ -46,7 +54,13 @@ export const router = createBrowserRouter([
         </PrivateRoutes>,
     },
     {
-        path:"*",
-        Component:NotFound,
+        path: "/addjobs",
+        element: <PrivateRoutes>
+            <Addjobs />
+        </PrivateRoutes>,
+    },
+    {
+        path: "*",
+        Component: NotFound,
     }
 ])

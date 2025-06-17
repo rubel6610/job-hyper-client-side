@@ -18,8 +18,8 @@ const MyapplicationList = ({ myapplicationPromise }) => {
                                    #
                                 </label>
                             </th>
-                            <th>link</th>
-                            <th>job type</th>
+                            <th>Company</th>
+                            <th>Portfolio link</th>
                             <th>Application Category</th>
                            
                         </tr>
