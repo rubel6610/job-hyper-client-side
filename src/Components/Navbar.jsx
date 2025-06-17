@@ -9,8 +9,12 @@ const Navbar = () => {
 
   const links = <>
     <NavLink to="/" className="btn btn-ghost">Home</NavLink>
-    <NavLink to="/myapplication" className="btn btn-ghost">My Application</NavLink>
-    <NavLink to="/addjobs" className="btn btn-ghost">Add Jobs</NavLink>
+    {
+      user && <> <NavLink to="/myapplication" className="btn btn-ghost">My Application</NavLink>
+        <NavLink to="/addjobs" className="btn btn-ghost">Add Jobs</NavLink>
+      </>
+    }
+
   </>
   return (
     <div className="navbar container mx-auto bg-base-100 shadow-sm">
@@ -43,9 +47,9 @@ const Navbar = () => {
             <div className="dropdown dropdown-center">
               <div tabIndex={0} role="button" className='btn btn-ghost btn-circle avatar'><img className='w-10 rounded-full' src={user.photoURL} /></div>
               <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-42   shadow-sm">
-                
+
                 <li><Link>{user.displayName}</Link></li>
-                 
+
                 <li><button onClick={() => logOut()}>LogOut</button></li>
               </ul>
             </div>

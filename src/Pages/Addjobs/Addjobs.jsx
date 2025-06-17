@@ -1,6 +1,8 @@
 
 import axios from 'axios';
 import React from 'react';
+import Swal from 'sweetalert2';
+import Navbar from '../../Components/Navbar';
 
 const Addjobs = () => {
     const handleAddJob = e => {
@@ -16,13 +18,31 @@ const Addjobs = () => {
         newJob.responsibilities = responsibilities;
 
         //send data to backend
-       axios.post('https://job-hyper-server.vercel.app/addjobs',newJob)
-       .then(res=>{
-        console.log(res.data);
-       })
+        axios.post('https://job-hyper-server.vercel.app/addjobs', newJob)
+            .then(res => {
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: "job added",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    form.reset();
+                }
+            }).catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Job add Failed',
+                    text: error.message,
+                });
+            })
     }
     return (
+        <>
+         <Navbar/>
         <div className='grid justify-center'>
+           
             <h1 className='text-2xl text-center my-2'>Add a job</h1>
             <form onSubmit={handleAddJob}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-full grid-cols-1  md:grid-cols-3  gap-4 border p-4">
@@ -131,6 +151,7 @@ const Addjobs = () => {
                 <input className='btn w-full' type="submit" value="Add Job" />
             </form>
         </div>
+        </>
     );
 };
 
