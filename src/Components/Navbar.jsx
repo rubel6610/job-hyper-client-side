@@ -11,7 +11,9 @@ const Navbar = () => {
     <NavLink to="/" className="btn btn-ghost">Home</NavLink>
     {
       user && <> <NavLink to="/myapplication" className="btn btn-ghost">My Application</NavLink>
+      <NavLink to="/mypostedjobs" className="btn btn-ghost">My Posted Jobs</NavLink>
         <NavLink to="/addjobs" className="btn btn-ghost">Add Jobs</NavLink>
+        
       </>
     }
 
