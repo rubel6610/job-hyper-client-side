@@ -18,7 +18,7 @@ const Addjobs = () => {
         newJob.responsibilities = responsibilities;
 
         //send data to backend
-        axios.post('http://localhost:3000/addjobs', newJob)
+        axios.post('https://job-hyper-server.vercel.app/addjobs', newJob)
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({

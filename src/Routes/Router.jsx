@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
     {
         path: "/jobdetails/:id",
         loader: async ({ params }) => {
-            const res = await fetch(`http://localhost:3000/singlejob/${params.id}`);
+            const res = await fetch(`https://job-hyper-server.vercel.app/singlejob/${params.id}`);
             if (!res.ok) {
                 throw new Response("Not Found", { status: 404 });
             }

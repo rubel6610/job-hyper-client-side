@@ -9,7 +9,7 @@ const MypostedJobs = () => {
     const [jobs, setJobs] = useState([])
     const [fetching, setFetching] = useState(true)
     useEffect(() => {
-        axios.get(`http://localhost:3000/mypostedjobs?email=${user.email}`)
+        axios.get(`https://job-hyper-server.vercel.app/mypostedjobs?email=${user.email}`)
             .then(res => {
                 setJobs(res.data)
                 setFetching(false)
