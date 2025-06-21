@@ -19,8 +19,9 @@ const Jobapply = () => {
             instagram,
             linkedin,
             applicant: user.email,
+           
         }
-        axios.post('https://job-hyper-server.vercel.app/applications', applicationData)
+        axios.post('http://localhost:3000/applications', applicationData)
             .then(res => {
                 const data = res.data;
                 if (data.insertedId) {

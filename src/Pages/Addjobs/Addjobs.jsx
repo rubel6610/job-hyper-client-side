@@ -3,9 +3,12 @@ import axios from 'axios';
 import React from 'react';
 import Swal from 'sweetalert2';
 import Navbar from '../../Components/Navbar';
+import UseAuth from '../../Components/UseAuth';
 
 const Addjobs = () => {
+         const {user}=UseAuth();
     const handleAddJob = e => {
+   
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
@@ -18,7 +21,7 @@ const Addjobs = () => {
         newJob.responsibilities = responsibilities;
 
         //send data to backend
-        axios.post('https://job-hyper-server.vercel.app/addjobs', newJob)
+        axios.post('http://localhost:3000/addjobs', newJob)
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({
@@ -145,7 +148,7 @@ const Addjobs = () => {
                     <label htmlFor="" className='label'>Hr Name</label>
                     <input type="text" name='hr_name' className="input w-full" placeholder="HR Name" />
                     <label className="label">Hr Email</label>
-                    <input required type="text" name='hr_email' className="input w-full" placeholder="HR Email" />
+                    <input required disabled type="text" name='hr_email' className="input w-full" value={user.email} placeholder="HR Email" />
 
                 </fieldset>
                 <input className='btn w-full' type="submit" value="Add Job" />

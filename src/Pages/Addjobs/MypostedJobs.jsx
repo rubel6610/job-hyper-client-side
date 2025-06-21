@@ -1,31 +1,24 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UseAuth from '../../Components/UseAuth';
-import axios from 'axios';
+
 import Swal from 'sweetalert2';
 import Navbar from '../../Components/Navbar';
+import { Link } from 'react-router-dom';
 
 const MypostedJobs = () => {
-    const { user, loading } = UseAuth();
-    const [jobs, setJobs] = useState([])
-    const [fetching, setFetching] = useState(true)
-    useEffect(() => {
-        axios.get(`https://job-hyper-server.vercel.app/mypostedjobs?email=${user.email}`)
-            .then(res => {
-                setJobs(res.data)
-                setFetching(false)
-            }).catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Job add Failed',
-                    text: error.message,
-                });
-                setFetching(false)
-            })
-    }, [user?.email])
-console.log(jobs);
-    if (loading || fetching) {
-        return <div className="text-center py-10">Loading your posted jobs...</div>;
-    }
+    const { user } = UseAuth();
+    const [jobs, setJobs] = useState([]);
+  
+
+ useEffect(()=>{
+       fetch(`http://localhost:3000/mypostedjobs?email=${user.email}`,{
+        credentials:"include"
+    }).then(res => res.json()).then(data => {
+        setJobs(data)
+    });
+    
+ },[user?.email])
+   if (!user?.email) return;
 
     return (
         <div>
@@ -43,29 +36,35 @@ console.log(jobs);
                             <th>Company</th>
                             <th>Title</th>
                             <th>Deadline</th>
+                            <th>Actions</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            jobs.map((job, index) => <>
-                                <tr>
+                            jobs.map((job, index) => 
+                           
+                                <tr key={job._id}>
                                     <td>{index + 1}</td>
                                     <td>
-                                         <img className='w-16' src={job.company_logo} alt="" />
-                                       <h1>
-                                        {job.company}
-                                        </h1> 
+                                        <img className='w-16' src={job.company_logo} alt="" />
+                                        <h1>
+                                            {job.company}
+                                        </h1>
+
+                                    </td>
+                                    <td>
+                                        {job.title}
+                                    </td>
+                                    <td>
+                                        {job.deadline}
+                                    </td>
+                                    <td>
                                        
-                                        </td>
-                                        <td>
-                                            {job.title}
-                                        </td>
-                                        <td>
-                                            {job.deadline}
-                                        </td>
+                                        <Link to={`viewapplication/${job._id}`}>View Application</Link>
+                                    </td>
                                 </tr>
-                            </>)
+                           )
                         }
                     </tbody>
                 </table>
