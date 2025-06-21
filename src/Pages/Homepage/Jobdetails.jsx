@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-
+import Navbar from "../../Components/Navbar"
 const Jobdetails = () => {
     
   const {
@@ -16,6 +16,8 @@ const Jobdetails = () => {
   } = useLoaderData();
 
   return (
+    <>
+   <Navbar/>
     <div className="max-w-4xl mx-auto p-6 my-10 bg-white shadow-lg rounded-2xl border border-gray-200">
       <div className="flex items-center gap-6 mb-6">
         <img
@@ -61,6 +63,7 @@ const Jobdetails = () => {
         </Link>
       </div>
     </div>
+    </>
   );
 };
 
